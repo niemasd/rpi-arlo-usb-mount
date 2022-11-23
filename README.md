@@ -35,7 +35,7 @@ Now, we can power the Raspberry Pi using its USB port that's marked `USB` (rathe
 The Arlo Base Station will always be on, so powering the Raspberry Pi via the USB port it's plugged into will be fine. Once plugged in and powered on, we can SSH back into the Raspberry Pi.
 
 # Step 3: Create a Container File
-To enable mass storage device mode, we need to create a large file to act as the storage medium on the SD card. This file will emulate the USB flash drive that the TV sees.
+To enable mass storage device mode, we need to create a large file to act as the storage medium on the SD card. This file will emulate the USB flash drive that the TV sees. The following instructions will make the virtual USB storage read-only from the Raspberry Pi's perspective, but write-able from the device it's plugged into.
 
 ## Step 3.1: Create Empty File
 The command below will create an empty 16 GB binary file (change the `count=16384` argument if you want a different size). Note that this will be limited by the available free space on your SD card (check the `Avail` column in `df -h`), and it may take a few minutes to complete the setup:
@@ -63,7 +63,7 @@ sudo mkdir /mnt/usb_share
 Next, we need to add the mount folder to the configuration file that records our available disk partitions, which will allow the USB file system to be error-checked and mounted automatically upon boot. Add the following to the bottom of `/etc/fstab` (need to edit as `sudo`):
 
 ```
-/piusb.bin /mnt/usb_share vfat users,umask=000 0 2
+/piusb.bin /mnt/usb_share vfat ro,users,umask=222 0 2
 ```
 
 ### Step 3.3.3: Reload `fstab` to Mount
