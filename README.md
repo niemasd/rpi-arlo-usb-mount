@@ -50,3 +50,25 @@ The command below will format the empty binary file created in [Step 3.1](#step-
 ```bash
 sudo mkdosfs /piusb.bin -F 32 -I
 ```
+
+## Step 3.3: Mount the Container File
+### Step 3.3.1: Create Mount Folder
+First, we create a folder on which we can mount the file system:
+
+```bash
+sudo mkdir /mnt/usb_share
+```
+
+### Step 3.3.2: Add Mount Folder to `fstab`
+Next, we need to add the mount folder to the configuration file that records our available disk partitions, which will allow the USB file system to be error-checked and mounted automatically upon boot. Add the following to the bottom of `/etc/fstab` (need to edit as `sudo`):
+
+```
+/piusb.bin /mnt/usb_share vfat users,umask=000 0 2
+```
+
+### Step 3.3.3: Reload `fstab` to Mount
+Instead of rebooting, we can manually reload `fstab` with the command below:
+
+```bash
+sudo mount -a
+```
