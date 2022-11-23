@@ -37,8 +37,16 @@ The Arlo Base Station will always be on, so powering the Raspberry Pi via the US
 # Step 3: Create a Container File
 To enable mass storage device mode, we need to create a large file to act as the storage medium on the SD card. This file will emulate the USB flash drive that the TV sees.
 
-The command below will create an empty 16GB binary file (change the `count=16384` argument if you want a different size). Note that this will be limited by the available free space on your SD card (check the `Avail` column in `df -h`), and it may take a few minutes to complete the setup:
+## Step 3.1: Create Empty File
+The command below will create an empty 16 GB binary file (change the `count=16384` argument if you want a different size). Note that this will be limited by the available free space on your SD card (check the `Avail` column in `df -h`), and it may take a few minutes to complete the setup:
 
 ```bash
 sudo dd bs=1M if=/dev/zero of=/piusb.bin count=16384
+```
+
+# Step 3.2: Format as FAT32
+The command below will format the empty binary file created in Step 3.1 into the FAT32 format:
+
+```bash
+sudo mkdosfs /piusb.bin -F 32 -I
 ```
