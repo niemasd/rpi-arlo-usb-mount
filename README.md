@@ -33,3 +33,12 @@ Now, we can power the Raspberry Pi using its USB port that's marked `USB` (rathe
 > Alternatively, you can connect a separate, always-on power supply to the PWR IN port, and use a slightly modified micro USB cable to connect the TV to the USB port. The modification is to cut the red wire inside the micro USB cable. This protects the Pi from damage that could be caused by drawing power from two different power sources. The advantage of this method is that the Pi is powered independently from the TV. It will be available on the network even if the TV is off, and there is a reduced risk of sudden power loss and SD card corruption.
 
 The Arlo Base Station will always be on, so powering the Raspberry Pi via the USB port it's plugged into will be fine. Once plugged in and powered on, we can SSH back into the Raspberry Pi.
+
+# Step 3: Create a Container File
+To enable mass storage device mode, we need to create a large file to act as the storage medium on the SD card. This file will emulate the USB flash drive that the TV sees.
+
+The command below will create an empty 16GB binary file (change the `count=16384` argument if you want a different size). Note that this will be limited by the available free space on your SD card (check the `Avail` column in `df -h`), and it may take a few minutes to complete the setup:
+
+```bash
+sudo dd bs=1M if=/dev/zero of=/piusb.bin count=16384
+```
