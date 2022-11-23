@@ -44,8 +44,8 @@ The command below will create an empty 16 GB binary file (change the `count=1638
 sudo dd bs=1M if=/dev/zero of=/piusb.bin count=16384
 ```
 
-# Step 3.2: Format as FAT32
-The command below will format the empty binary file created in Step 3.1 into the FAT32 format:
+## Step 3.2: Format as FAT32
+The command below will format the empty binary file created in [Step 3.1](#step-31-create-empty-file) into the FAT32 format:
 
 ```bash
 sudo mkdosfs /piusb.bin -F 32 -I
