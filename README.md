@@ -89,3 +89,14 @@ The command below will **disable** USB mass storage device mode:
 ```bash
 sudo modprobe -r g_mass_storage
 ```
+
+# Step 5: Format USB in Arlo App
+The Arlo Base Station should now be able to see the Raspberry Pi's virtual disk as a USB device:
+1. Open the Arlo app
+2. Click "SmartHub / Base Station / Bridge"
+3. Click on the Base Station the Raspberry Pi is plugged into
+4. Click "Storage Settings"
+5. Click "USB Device 1"
+6. Click "FORMAT USB FLASH DRIVE" to format for use by your Arlo Base Station
+
+Once this is complete, the Arlo Base Station should now be able to use the virtual disk in the Raspberry Pi.
