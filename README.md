@@ -1,4 +1,4 @@
-Much of this guide was pulled from the following resources:
+This was all done using a Raspberry Pi Zero. Much of this guide was pulled from the following resources:
 * https://magpi.raspberrypi.com/articles/pi-zero-w-smart-usb-flash-drive
 
 # Step 1: Enable USB Driver
@@ -32,4 +32,4 @@ Now, we can power the Raspberry Pi using its USB port that's marked `USB` (rathe
 
 > Alternatively, you can connect a separate, always-on power supply to the PWR IN port, and use a slightly modified micro USB cable to connect the TV to the USB port. The modification is to cut the red wire inside the micro USB cable. This protects the Pi from damage that could be caused by drawing power from two different power sources. The advantage of this method is that the Pi is powered independently from the TV. It will be available on the network even if the TV is off, and there is a reduced risk of sudden power loss and SD card corruption.
 
-The Arlo Base Station will always be on, so powering the Raspberry Pi via the USB port it's plugged into will be fine.
+The Arlo Base Station will always be on, so powering the Raspberry Pi via the USB port it's plugged into will be fine. Once plugged in and powered on, we can SSH back into the Raspberry Pi.
