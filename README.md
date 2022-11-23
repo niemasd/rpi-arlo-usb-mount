@@ -73,12 +73,14 @@ Instead of rebooting, we can manually reload `fstab` with the command below:
 sudo mount -a
 ```
 
-# Step 4: Enable/Disable Mass Storage Device Mode
+# Step 4: Enable/Disable USB Mass Storage Device Mode
+We can now enable/disable USB mass storage device mode. You can also create an `alias` for each of the following commands for convenience.
+
 ## Step 4.1: Enable
 The command below will **enable** USB mass storage device mode:
 
 ```bash
-sudo modprobe g_mass_storage file=/piusb.bin stall=0 ro=1
+sudo modprobe g_mass_storage file=/piusb.bin stall=0 ro=0 removable=1
 ```
 
 ## Step 4.2: Disable
