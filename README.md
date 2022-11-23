@@ -100,3 +100,7 @@ The Arlo Base Station should now be able to see the Raspberry Pi's virtual disk 
 6. Click "FORMAT USB FLASH DRIVE" to format for use by your Arlo Base Station
 
 Once this is complete, the Arlo Base Station should now be able to use the virtual disk in the Raspberry Pi.
+
+# Brainstorming Next Steps
+* Upload videos directly to YouTube via [youtube-upload](https://github.com/tokland/youtube-upload)?
+  * Maybe automatically upon creation via [`inotifywait`](https://unix.stackexchange.com/a/323919/244551)?
