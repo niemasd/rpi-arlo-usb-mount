@@ -106,7 +106,11 @@ sudo umount /mnt/usb_share
 sudo mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
 
-I created an `alias` called `usb_remount` that peforms both of these.
+I created an `alias` called `usb_remount` that peforms both of these. I also added the following `cron` job to `root`'s `crontab` by calling `sudo crontab -e` and adding the following to the bottom:
+
+```
+* * * * * source /home/niema/.bash_alias ; usb_remount
+```
 
 # Brainstorming Next Steps
 * Periodically run the unmount + remount commands (e.g. every 10 seconds)?
