@@ -128,7 +128,3 @@ I then added a `cron` job to copy all of the recordings to a Google Drive folder
 ```
 * * * * * rclone copy /mnt/usb_share/arlo/000000 drive_niemasd:"Security Cameras"
 ```
-
-# Brainstorming Next Steps
-* Upload videos directly to YouTube via [youtube-upload](https://github.com/tokland/youtube-upload)?
-  * Maybe automatically upon creation via [`inotifywait`](https://unix.stackexchange.com/a/323919/244551)?
