@@ -59,19 +59,15 @@ First, we create a folder on which we can mount the file system:
 sudo mkdir /mnt/usb_share
 ```
 
-### Step 3.3.2: Add Mount Folder to `fstab`
-Next, we need to add the mount folder to the configuration file that records our available disk partitions, which will allow the USB file system to be error-checked and mounted automatically upon boot. Add the following to the bottom of `/etc/fstab` (need to edit as `sudo`):
-
-```
-/piusb.bin /mnt/usb_share vfat ro,users,umask=222 0 2
-```
-
-### Step 3.3.3: Reload `fstab` to Mount
-Instead of rebooting, we can manually reload `fstab` with the command below:
+### Step 3.3.2: Mount Using `kpartx`
+I originally tried using `mount` to get it to mount, but it didn't work properly (probably starting offset issue?), but `kpartx` was able to do it fine:
 
 ```bash
-sudo mount -a
+sudo kpartx -a /piusb.bin
+sudo mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
+
+I added these `.bashrc` so they run on boot, and it worked fine.
 
 # Step 4: Enable/Disable USB Mass Storage Device Mode
 We can now enable/disable USB mass storage device mode. You can also create an `alias` for each of the following commands for convenience.
