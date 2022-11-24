@@ -109,10 +109,23 @@ sudo mount /dev/mapper/loop0p1 /mnt/usb_share
 I created an `alias` called `usb_remount` that peforms both of these. I also added a `cron` job to do this every minute by adding the following to `root`'s `crontab` (`sudo crontab -e`):
 
 ```
-* * * * * source /home/niema/.bash_alias ; usb_remount
+* * * * * source /home/niema/.bash_alias ; umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
+```
+
+## Automatic Upload to YouTube
+I installed [youtube-upload](https://github.com/tokland/youtube-upload) as follows:
+
+```bash
+sudo -H pip3 install --upgrade --no-cache-dir google-api-python-client oauth2client progressbar2
+sudo -H pip3 install git+https://github.com/tokland/youtube-upload.git
+```
+
+I then wrote the following Python script that uploads all video files in a given directory to YouTube:
+
+```python
+TODO
 ```
 
 # Brainstorming Next Steps
-* Periodically run the unmount + remount commands (e.g. every 10 seconds)?
 * Upload videos directly to YouTube via [youtube-upload](https://github.com/tokland/youtube-upload)?
   * Maybe automatically upon creation via [`inotifywait`](https://unix.stackexchange.com/a/323919/244551)?
