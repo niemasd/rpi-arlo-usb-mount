@@ -97,8 +97,7 @@ The Arlo Base Station should now be able to see the Raspberry Pi's virtual disk 
 
 Once this is complete, the Arlo Base Station should now be able to use the virtual disk in the Raspberry Pi.
 
-# General Comments
-## Refreshing Mounted Directory in Raspberry Pi
+# Step 6: Refreshing Mounted Directory in Raspberry Pi
 In Raspberry Pi, the mounted folder won't automatically refresh as files are added. Thus, you need to periodically unmount and remount the folder:
 
 ```bash
@@ -112,7 +111,7 @@ I created an `alias` called `usb_remount` that peforms both of these. I also add
 * * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
 
-## Automatic Upload to Google Drive
+# Step 7: Automatic Upload to Google Drive
 I installed [Rclone](https://rclone.org/install/) as follows:
 
 ```bash
