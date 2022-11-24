@@ -106,6 +106,8 @@ sudo umount /mnt/usb_share
 sudo mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
 
+I created an `alias` called `usb_remount` that peforms both of these.
+
 # Brainstorming Next Steps
 * Periodically run the unmount + remount commands (e.g. every 10 seconds)?
 * Upload videos directly to YouTube via [youtube-upload](https://github.com/tokland/youtube-upload)?
