@@ -109,42 +109,24 @@ sudo mount /dev/mapper/loop0p1 /mnt/usb_share
 I created an `alias` called `usb_remount` that peforms both of these. I also added a `cron` job to do this every minute by adding the following to `root`'s `crontab` (`sudo crontab -e`):
 
 ```
-* * * * * source /home/niema/.bash_alias ; umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
+* * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
 
-## Automatic Upload to YouTube
-THIS DIDN'T WORK
-
-I installed [youtube-upload](https://github.com/tokland/youtube-upload) as follows:
+## Automatic Upload to Google Drive
+I installed [Rclone](https://rclone.org/install/) as follows:
 
 ```bash
-sudo -H pip3 install --upgrade --no-cache-dir google-api-python-client oauth2client progressbar2
-sudo -H pip3 install git+https://github.com/tokland/youtube-upload.git
+sudo -v ; curl https://rclone.org/install.sh | sudo bash
 ```
 
-I then had to create a `~/.client_secrets.json` file from the Google Console:
-1. Go to: https://console.developers.google.com/
-2. Click "New Project" or "Create Project" or similar
-3. Name it something meaningful (e.g. "Arlo Video Upload"), create it, and select it
-4. In the left navigation menu (the 3 lines), click "APIs & Services"
-5. In the left menu, click on "Enabled APIs & servies"
-6. Click "+ ENABLE APIS AND SERVICES"
-7. Search for "YouTube" and enable all of them
-8. In the left navigation menu (the 3 lines), click "APIs & Services"
-9. In the left menu, click on "Credentials"
-10. Click "+ CREATE CREDENTIALS", then "OAuth client ID"
-11. Click "CONFIGURE CONSENT SCREEN" and configure it (if needed)
-  1. For "App name", I put "youtube-upload"
-  2. For "Scopes", I picked all the YouTube APIs
-  3. Then I returned back to the "OAuth client ID" selection in "+ CREATE CREDENTIALS" to continue
-13. For "Application type", I picked "Desktop app"
-14. For "Name", I put "youtube-upload" and then clicked "Create"
-15. I then clicked "DOWNLOAD JSON", which is the `~/.client_secrets.json` file that will be used by youtube-upload
+Because Rclone Google Drive authentication needs a web browser, I then installed it on my main desktop as well, and I configured a Google Drive remote in my Raspberry Pi's Rclone using the following remote setup guide:
 
-I then wrote the following Python script that uploads all video files in a given directory to YouTube:
+https://rclone.org/remote_setup/
 
-```python
-TODO
+I then added a `cron` job to copy all of the recordings to a Google Drive folder every minute by adding the following to my user's `crontab` (`crontab -e`):
+
+```
+* * * * * rclone copy /mnt/usb_share/arlo/000000 drive_niemasd:"Security Cameras"
 ```
 
 # Brainstorming Next Steps
