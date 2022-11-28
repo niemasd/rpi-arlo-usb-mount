@@ -125,5 +125,5 @@ https://rclone.org/remote_setup/
 I then added a `cron` job to copy all of the recordings to a Google Drive folder every minute by adding the following to my user's `crontab` (`crontab -e`):
 
 ```
-* * * * * rclone copy /mnt/usb_share/arlo/000000 drive_niemasd:"Security Cameras"
+* * * * * for f in /mnt/usb_share/arlo/*/*.* ; do rclone copy "$f" drive_niemasd:"Security Cameras/$(basename $f)" ; done
 ```
