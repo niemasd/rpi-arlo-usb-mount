@@ -122,8 +122,20 @@ Because Rclone Google Drive authentication needs a web browser, I then installed
 
 https://rclone.org/remote_setup/
 
-I then added a `cron` job to copy all of the recordings to a Google Drive folder every minute by adding the following to my user's `crontab` (`crontab -e`):
+All Arlo recordings can be uploaded to Google Drive using the following Rclone command:
+
+```bash
+for f in $(ls -d /mnt/usb_share/arlo/* | grep -v "arlo/metadata") ; do rclone copy --progress "$f" drive_niemasd:"Security Cameras" ; done
+```
+
+I then added a `cron` job to copy all of the recordings to a Google Drive folder every minute by adding the following to my user's `crontab` (`crontab -e`), where `COMMAND` is the Rclone upload command above:
 
 ```
-for f in $(ls -d /mnt/usb_share/arlo/* | grep -v "arlo/metadata") ; do rclone copy --progress "$f" drive_niemasd:"Security Cameras" ; done
+* * * * * COMMAND
+```
+
+If a lot of videos get recorded, you might run into issues with the next `cron` job starting before the previous one finishes, resulting in the system getting clogged up with a bunch of simultaneous Rclone processes. As such, rather than starting a `cron` job every minute, it may be better to start it e.g. every 5 minutes:
+
+```
+*/5 * * * * COMMAND
 ```
