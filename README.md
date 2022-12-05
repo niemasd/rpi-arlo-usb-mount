@@ -115,11 +115,10 @@ I created an `alias` called `usb_remount` that peforms both of these. I also add
 * * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
 ```
 
-I ran into an issue where it would randomly stop saving videos, but `usb_stop && usb_start` would fix it. Thus, I updated the `cron` job to check if the timestamp of the most recent file is more than 1 hour old, at which point it would automatically also perform `usb_stop && usb_start` (relies on my `numlist` tool in my [tools repo](https://github.com/niemasd/tools)):
+I ran into an issue where it would randomly stop saving videos, but `usb_stop && usb_start` would fix it. Thus, I added a `cron` job to check, every 30 minutes, if the timestamp of the most recent file is more than 30 minutes old, at which point it would automatically also perform `usb_stop && usb_start` (relies on my `numlist` tool in my [tools repo](https://github.com/niemasd/tools)):
 
 ```
-* * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
-* * * * * delta=$(eval 'date +%s -r "$(ls -dt /mnt/usb_share/arlo/*/*.* | head -1)" | numlist -sub"$(date +%s)" | numlist -abs') && if [[ "$delta" -ge "3600" ]] ; then modprobe -r g_mass_storage && modprobe g_mass_storage file=/piusb.bin stall=0 ro=0 removable=1 ; fi
+*/30 * * * * delta=$(eval 'date +%s -r "$(ls -dt /mnt/usb_share/arlo/*/*.* | head -1)" | numlist -sub"$(date +%s)" | numlist -abs') && if [[ "$delta" -ge "1800" ]] ; then modprobe -r g_mass_storage && modprobe g_mass_storage file=/piusb.bin stall=0 ro=0 removable=1 ; fi
 ```
 
 # Step 7: Automatic Upload to Google Drive
