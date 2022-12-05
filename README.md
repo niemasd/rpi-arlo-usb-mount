@@ -79,12 +79,16 @@ The command below will **enable** USB mass storage device mode:
 sudo modprobe g_mass_storage file=/piusb.bin stall=0 ro=0 removable=1
 ```
 
+I created an `alias` called `usb_start` for this one.
+
 ## Step 4.2: Disable
 The command below will **disable** USB mass storage device mode:
 
 ```bash
 sudo modprobe -r g_mass_storage
 ```
+
+I created an `alias` called `usb_stop` for this one.
 
 # Step 5: Format USB in Arlo App
 The Arlo Base Station should now be able to see the Raspberry Pi's virtual disk as a USB device:
@@ -109,6 +113,12 @@ I created an `alias` called `usb_remount` that peforms both of these. I also add
 
 ```
 * * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share
+```
+
+I ran into an issue where it would randomly stop saving videos, but `usb_stop && usb_start` would fix it. Thus, I updated the `cron` job to check if the timestamp of the most recent file is more than 1 hour old, at which point it would automatically also perform `usb_stop && usb_start` (relies on my `numlist` tool in my [tools repo](https://github.com/niemasd/tools)):
+
+```
+* * * * * umount /mnt/usb_share && mount /dev/mapper/loop0p1 /mnt/usb_share && delta=$(eval 'date +%s -r "$(ls -dt /mnt/usb_share/arlo/*/*.* | head -1)" | numlist -sub"$(date +%s)" | numlist -abs') && if [[ "$delta" -ge "3600" ]] ; then sudo modprobe -r g_mass_storage && sudo modprobe g_mass_storage file=/piusb.bin stall=0 ro=0 removable=1 ; fi
 ```
 
 # Step 7: Automatic Upload to Google Drive
